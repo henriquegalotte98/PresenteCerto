@@ -74,3 +74,7 @@ app.listen(PORT, () => {
   console.log(`📁 Uploads: http://localhost:${PORT}/uploads`);
   console.log(`🔍 Debug uploads: http://localhost:${PORT}/api/uploads-list\n`);
 });
+
+
+
+export default app;
