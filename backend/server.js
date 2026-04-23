@@ -37,11 +37,7 @@ try {
 
 // Middleware
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://presente-certo-9r8fg0vrs-henriquegalotte98s-projects.vercel.app',
-    /^https:\/\/presente-certo.*\.vercel\.app$/
-  ],
+  origin: true,
   credentials: true
 }));
 app.use(express.json());
