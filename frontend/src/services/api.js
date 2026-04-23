@@ -1,7 +1,14 @@
 import axios from 'axios';
 
-const BASE_URL = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '') : 'http://localhost:3001';
-export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+let envApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+
+// Auto-fix for Mixed Content (forces HTTPS on Vercel)
+if (envApiUrl.includes('vercel.app') && envApiUrl.startsWith('http://')) {
+  envApiUrl = envApiUrl.replace('http://', 'https://');
+}
+
+export const API_BASE_URL = envApiUrl;
+export const BASE_URL = API_BASE_URL.replace('/api', '');
 console.log('🌐 API URL sendo usada:', API_BASE_URL);
 export const UPLOADS_BASE_URL = `${BASE_URL}/uploads`;
 
