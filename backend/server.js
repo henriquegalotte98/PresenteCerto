@@ -18,22 +18,26 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Criar pastas necessárias
-const uploadsDir = path.join(__dirname, 'uploads');
-const comprovantesDir = path.join(uploadsDir, 'comprovantes');
+// Criar pastas necessárias (Mudar para ser condicional ou usar /tmp em produção)
+try {
+  const uploadsDir = path.join(__dirname, 'uploads');
+  const comprovantesDir = path.join(uploadsDir, 'comprovantes');
 
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir, { recursive: true });
-  console.log('📁 Pasta uploads criada');
-}
-if (!fs.existsSync(comprovantesDir)) {
-  fs.mkdirSync(comprovantesDir, { recursive: true });
-  console.log('📁 Pasta comprovantes criada');
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+    console.log('📁 Pasta uploads criada');
+  }
+  if (!fs.existsSync(comprovantesDir)) {
+    fs.mkdirSync(comprovantesDir, { recursive: true });
+    console.log('📁 Pasta comprovantes criada');
+  }
+} catch (err) {
+  console.log('⚠️ Ambiente Read-only ou erro ao criar pastas. Pulando...');
 }
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: '*',
   credentials: true
 }));
 app.use(express.json());
