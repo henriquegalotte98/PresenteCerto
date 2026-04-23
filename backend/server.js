@@ -18,11 +18,12 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Criar pastas necessárias (Mudar para ser condicional ou usar /tmp em produção)
-try {
-  const uploadsDir = path.join(__dirname, 'uploads');
-  const comprovantesDir = path.join(uploadsDir, 'comprovantes');
+// Definir caminhos de upload (Escopo Global)
+const uploadsDir = path.join(__dirname, 'uploads');
+const comprovantesDir = path.join(uploadsDir, 'comprovantes');
 
+// Criar pastas necessárias
+try {
   if (!fs.existsSync(uploadsDir)) {
     fs.mkdirSync(uploadsDir, { recursive: true });
     console.log('📁 Pasta uploads criada');
@@ -43,9 +44,9 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Servir arquivos estáticos (IMPORTANTE: deve ser antes das rotas)
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-console.log(`📁 Servindo arquivos estáticos de: ${path.join(__dirname, 'uploads')}`);
+// Servir arquivos estáticos
+app.use('/uploads', express.static(uploadsDir));
+console.log(`📁 Servindo arquivos estáticos de: ${uploadsDir}`);
 
 // Rotas
 app.use('/api/auth', authRoutes);
