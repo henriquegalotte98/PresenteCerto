@@ -8,9 +8,10 @@ import fs from 'fs';
 const router = express.Router();
 
 // Configuração do multer
+const isVercel = process.env.VERCEL === '1';
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadDir = './uploads';
+    const uploadDir = isVercel ? '/tmp/uploads/' : './uploads';
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true });
     }

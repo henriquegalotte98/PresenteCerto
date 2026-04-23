@@ -19,7 +19,9 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Definir caminhos de upload (Escopo Global)
-const uploadsDir = path.join(__dirname, 'uploads');
+// Na Vercel, somos obrigados a usar a pasta /tmp para escrita
+const isVercel = process.env.VERCEL === '1';
+const uploadsDir = isVercel ? '/tmp/uploads' : path.join(__dirname, 'uploads');
 const comprovantesDir = path.join(uploadsDir, 'comprovantes');
 
 // Criar pastas necessárias
