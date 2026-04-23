@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const BASE_URL = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace('/api', '') : 'http://localhost:3001';
 export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+console.log('🌐 API URL sendo usada:', API_BASE_URL);
 export const UPLOADS_BASE_URL = `${BASE_URL}/uploads`;
 
 const api = axios.create({
