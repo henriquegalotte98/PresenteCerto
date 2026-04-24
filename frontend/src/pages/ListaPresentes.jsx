@@ -71,11 +71,17 @@ export default function ListaPresentes() {
 
         // 2. Filtro por status
         if (filter === 'available') {
-            // Mostra apenas o que NÃO está comprado
-            result = result.filter(p => !p.comprado);
+            // Um produto está disponível se COMPRADO for falso E não houver nenhum convidado confirmado
+            result = result.filter(p => {
+                const isBought = !!p.comprado || (p.convidados && p.convidados.some(c => c && c.status === 'confirmado'));
+                return !isBought;
+            });
         } else if (filter === 'purchased') {
-            // Mostra apenas o que ESTÁ comprado
-            result = result.filter(p => !!p.comprado);
+            // Um produto está comprado se COMPRADO for verdadeiro OU houver algum convidado confirmado
+            result = result.filter(p => {
+                const isBought = !!p.comprado || (p.convidados && p.convidados.some(c => c && c.status === 'confirmado'));
+                return isBought;
+            });
         }
 
         setFiltered(result);
