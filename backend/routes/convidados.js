@@ -83,7 +83,7 @@ router.get('/meus-presentes/:email', async (req, res) => {
   
   try {
     const result = await pool.query(
-      `SELECT c.*, p.nome, p.preco, p.foto, p.link, e.titulo as evento_titulo, e.data_evento
+      `SELECT c.*, p.nome, p.preco, p.foto, p.link, e.titulo as evento_titulo, e.data_evento, e.codigo as codigo_evento
        FROM convidados c
        JOIN produtos p ON c.id_produto = p.id_produto
        JOIN eventos e ON p.id_evento = e.id_evento
