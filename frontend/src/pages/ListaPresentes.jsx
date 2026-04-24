@@ -60,23 +60,24 @@ export default function ListaPresentes() {
     const filtrarProdutos = () => {
         let result = [...produtos];
 
-        // Filtro por termo de busca
-        if (search) {
+        // 1. Filtro por busca (texto)
+        if (search.trim()) {
             const term = search.toLowerCase();
             result = result.filter(p => 
-                p.nome.toLowerCase().includes(term) || 
+                (p.nome && p.nome.toLowerCase().includes(term)) || 
                 (p.observacao && p.observacao.toLowerCase().includes(term))
             );
         }
 
-        // Filtro por status (Disponível / Comprado)
+        // 2. Filtro por status
         if (filter === 'available') {
-            result = result.filter(p => p.comprado === false || p.comprado === 0 || p.comprado === 'false');
+            // Mostra apenas o que NÃO está comprado
+            result = result.filter(p => !p.comprado);
         } else if (filter === 'purchased') {
-            result = result.filter(p => p.comprado === true || p.comprado === 1 || p.comprado === 'true');
+            // Mostra apenas o que ESTÁ comprado
+            result = result.filter(p => !!p.comprado);
         }
 
-        console.log(`🔍 Filtragem aplicada: ${filter}, Resultados: ${result.length}`);
         setFiltered(result);
     };
 
