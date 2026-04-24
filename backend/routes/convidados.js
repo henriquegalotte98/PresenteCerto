@@ -1,4 +1,5 @@
 import express from 'express';
+import multer from 'multer';
 import pool from '../database/db.js';
 import fs from 'fs';
 import cloudinary from '../config/cloudinary.js';
