@@ -59,14 +59,24 @@ export default function ListaPresentes() {
 
     const filtrarProdutos = () => {
         let result = [...produtos];
+
+        // Filtro por termo de busca
         if (search) {
-            result = result.filter(p => p.nome.toLowerCase().includes(search.toLowerCase()));
+            const term = search.toLowerCase();
+            result = result.filter(p => 
+                p.nome.toLowerCase().includes(term) || 
+                (p.observacao && p.observacao.toLowerCase().includes(term))
+            );
         }
+
+        // Filtro por status (Disponível / Comprado)
         if (filter === 'available') {
-            result = result.filter(p => !p.comprado);
+            result = result.filter(p => p.comprado === false || p.comprado === 0 || p.comprado === 'false');
         } else if (filter === 'purchased') {
-            result = result.filter(p => p.comprado);
+            result = result.filter(p => p.comprado === true || p.comprado === 1 || p.comprado === 'true');
         }
+
+        console.log(`🔍 Filtragem aplicada: ${filter}, Resultados: ${result.length}`);
         setFiltered(result);
     };
 
