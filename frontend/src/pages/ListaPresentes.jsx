@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { MapPin, Calendar, User, Search, Gift, Heart } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import api, { BASE_URL } from '../services/api';
+import api, { BASE_URL, formatImageUrl } from '../services/api';
 import toast from 'react-hot-toast';
 
 export default function ListaPresentes() {
@@ -264,15 +264,9 @@ export default function ListaPresentes() {
                                 <div style={{ height: 200, overflow: 'hidden', background: '#f5f5f7', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
                                     {produto.foto ? (
                                         <img
-                                            src={`${BASE_URL}${produto.foto}`}
+                                            src={formatImageUrl(produto.foto)}
                                             alt={produto.nome}
                                             style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                            onError={(e) => {
-                                                console.error('Erro na imagem:', produto.foto);
-                                                e.target.style.display = 'none';
-                                                const parent = e.target.parentElement;
-                                                parent.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#6e6e73" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="8.5" cy="8.5" r="2.5"/><path d="M21 15l-5-4-3 3-4-4-5 5"/></svg></div>';
-                                            }}
                                         />
                                     ) : (
                                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>

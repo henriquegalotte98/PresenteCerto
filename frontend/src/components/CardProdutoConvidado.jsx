@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShoppingBag, CheckCircle, Heart } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import api, { BASE_URL } from '../services/api';
+import api, { BASE_URL, formatImageUrl } from '../services/api';
 import toast from 'react-hot-toast';
 
 export default function CardProdutoConvidado({ produto, idEvento, onUpdate }) {
@@ -58,7 +58,7 @@ export default function CardProdutoConvidado({ produto, idEvento, onUpdate }) {
       <div className="product-card">
         <div className="product-image">
           {produto.foto ? (
-            <img src={`${BASE_URL}${produto.foto}`} alt={produto.nome} />
+            <img src={formatImageUrl(produto.foto)} alt={produto.nome} />
           ) : (
             <ShoppingBag size={48} color="#6e6e73" />
           )}

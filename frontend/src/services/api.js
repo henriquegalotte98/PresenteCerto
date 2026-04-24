@@ -10,7 +10,13 @@ if (envApiUrl.includes('vercel.app') && envApiUrl.startsWith('http://')) {
 export const API_BASE_URL = envApiUrl;
 export const BASE_URL = API_BASE_URL.replace('/api', '');
 console.log('🌐 API URL sendo usada:', API_BASE_URL);
-export const UPLOADS_BASE_URL = `${BASE_URL}/uploads`;
+
+// Função inteligente para formatar a URL da imagem
+export const formatImageUrl = (path) => {
+  if (!path) return 'https://placehold.co/600x600?text=Sem+Foto';
+  if (path.startsWith('http')) return path; // Se já for URL completa (Cloudinary)
+  return `${BASE_URL}${path}`; // Se for caminho local (/uploads)
+};
 
 const api = axios.create({
   baseURL: API_BASE_URL,

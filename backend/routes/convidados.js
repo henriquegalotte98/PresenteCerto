@@ -1,25 +1,28 @@
 import express from 'express';
 import pool from '../database/db.js';
-import multer from 'multer';
-
 import fs from 'fs';
+import cloudinary from '../config/cloudinary.js';
+import streamifier from 'streamifier';
 
 const router = express.Router();
 
-const isVercel = process.env.VERCEL === '1';
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadPath = isVercel ? '/tmp/uploads/comprovantes/' : './uploads/comprovantes/';
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true });
-    }
-    cb(null, uploadPath);
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  }
-});
+// Configuração do multer em memória
+const storage = multer.memoryStorage();
 const upload = multer({ storage });
+
+// Função auxiliar para upload via stream
+const uploadToCloudinary = (buffer) => {
+  return new Promise((resolve, reject) => {
+    let stream = cloudinary.uploader.upload_stream(
+      { folder: "presente-certo/comprovantes" },
+      (error, result) => {
+        if (result) resolve(result);
+        else reject(error);
+      }
+    );
+    streamifier.createReadStream(buffer).pipe(stream);
+  });
+};
 
 // Convidado se compromete com um produto
 router.post('/comprometer', async (req, res) => {
@@ -44,15 +47,21 @@ router.post('/comprometer', async (req, res) => {
 router.post('/confirmar/:id_produto', upload.single('comprovante'), async (req, res) => {
   const { id_produto } = req.params;
   const { email, nota_fiscal } = req.body;
-  const comprovante = req.file ? `/uploads/comprovantes/${req.file.filename}` : null;
   
   try {
+    // Upload do comprovante para o Cloudinary
+    let comprovanteUrl = null;
+    if (req.file) {
+      const result = await uploadToCloudinary(req.file.buffer);
+      comprovanteUrl = result.secure_url;
+    }
+    
     const result = await pool.query(
       `UPDATE convidados 
        SET status = 'confirmado', nota_fiscal = $1, comprovante = $2, data_compra = NOW()
        WHERE id_produto = $3 AND email_convidado = $4
        RETURNING *`,
-      [nota_fiscal, comprovante, id_produto, email]
+      [nota_fiscal, comprovanteUrl, id_produto, email]
     );
     
     // Atualizar status do produto

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Plus, Edit2, Trash2, Gift, Copy, Calendar, MapPin, Users, Image } from 'lucide-react';
-import api, { BASE_URL } from '../services/api';
+import api, { BASE_URL, formatImageUrl } from '../services/api';
 import toast from 'react-hot-toast';
 import BotaoDeletar from './DeletarLista';
 
@@ -372,14 +372,9 @@ export default function PainelDono() {
                                         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                                             {produto.foto ? (
                                                 <img
-                                                    src={`${BASE_URL}${produto.foto}`}
+                                                    src={formatImageUrl(produto.foto)}
                                                     alt={produto.nome}
                                                     style={{ width: 48, height: 48, borderRadius: 8, objectFit: 'cover' }}
-                                                    onError={(e) => {
-                                                        e.target.style.display = 'none';
-                                                        const parent = e.target.parentElement;
-                                                        parent.innerHTML = '<div style="width:48px;height:48px;background:#f5f5f7;border-radius:8px;display:flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6e6e73"><rect x="2" y="2" width="20" height="20" rx="2"/><circle cx="8.5" cy="8.5" r="2.5"/></svg></div>';
-                                                    }}
                                                 />
                                             ) : (
                                                 <div style={{ width: 48, height: 48, background: '#f5f5f7', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

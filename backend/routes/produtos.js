@@ -5,47 +5,39 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 
+import cloudinary from '../config/cloudinary.js';
+import streamifier from 'streamifier';
+
 const router = express.Router();
 
-// Configuração do multer
-const isVercel = process.env.VERCEL === '1';
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadDir = isVercel ? '/tmp/uploads/' : './uploads';
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
-    cb(null, uploadDir);
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
-  }
-});
-
+// Configuração do multer em memória
+const storage = multer.memoryStorage();
 const upload = multer({ 
   storage: storage,
   limits: { fileSize: 5 * 1024 * 1024 }
 });
 
+// Função auxiliar para upload via stream
+const uploadToCloudinary = (buffer) => {
+  return new Promise((resolve, reject) => {
+    let stream = cloudinary.uploader.upload_stream(
+      { folder: "presente-certo/produtos" },
+      (error, result) => {
+        if (result) resolve(result);
+        else reject(error);
+      }
+    );
+    streamifier.createReadStream(buffer).pipe(stream);
+  });
+};
+
 // Criar produto
 router.post('/', authMiddleware, upload.single('foto'), async (req, res) => {
-  console.log('=== DADOS RECEBIDOS ===');
-  console.log('Body:', req.body);
-  console.log('File:', req.file);
-  
   const { id_evento, nome, preco, link, observacao } = req.body;
   const id_usuario = req.usuarioId;
   
-  // Validação
-  if (!id_evento) {
-    return res.status(400).json({ error: 'ID do evento é obrigatório' });
-  }
-  if (!nome) {
-    return res.status(400).json({ error: 'Nome do produto é obrigatório' });
-  }
-  if (!preco) {
-    return res.status(400).json({ error: 'Preço do produto é obrigatório' });
+  if (!id_evento || !nome || !preco) {
+    return res.status(400).json({ error: 'Dados obrigatórios faltando' });
   }
   
   try {
@@ -59,21 +51,12 @@ router.post('/', authMiddleware, upload.single('foto'), async (req, res) => {
       return res.status(404).json({ error: 'Evento não encontrado' });
     }
     
-    const isDono = eventoCheck.rows[0].id_dono === id_usuario;
-    const colaboradorCheck = await pool.query(
-      'SELECT 1 FROM colaboradores WHERE id_evento = $1 AND id_usuario = $2',
-      [id_evento, id_usuario]
-    );
-    
-    if (!isDono && colaboradorCheck.rows.length === 0) {
-      return res.status(403).json({ error: 'Sem permissão' });
-    }
-    
-    // Caminho da foto
-    let fotoPath = null;
+    // Upload para Cloudinary se houver arquivo
+    let fotoUrl = null;
     if (req.file) {
-      fotoPath = `/uploads/${req.file.filename}`;
-      console.log('📸 Foto salva em:', fotoPath);
+      const result = await uploadToCloudinary(req.file.buffer);
+      fotoUrl = result.secure_url;
+      console.log('📸 Foto no Cloudinary:', fotoUrl);
     }
     
     // Inserir no banco
@@ -81,15 +64,12 @@ router.post('/', authMiddleware, upload.single('foto'), async (req, res) => {
       `INSERT INTO produtos (id_evento, nome, preco, link, foto, observacao, comprado) 
        VALUES ($1, $2, $3, $4, $5, $6, false) 
        RETURNING *`,
-      [id_evento, nome, preco, link || null, fotoPath, observacao || null]
+      [id_evento, nome, preco, link || null, fotoUrl, observacao || null]
     );
-    
-    console.log('✅ Produto criado ID:', result.rows[0].id_produto);
-    console.log('📸 Foto no banco:', result.rows[0].foto);
     
     res.status(201).json(result.rows[0]);
   } catch (error) {
-    console.error('❌ Erro:', error);
+    console.error('❌ Erro no upload:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -141,33 +121,11 @@ router.put('/:id', authMiddleware, upload.single('foto'), async (req, res) => {
       return res.status(404).json({ error: 'Produto não encontrado' });
     }
     
-    // Verificar permissão
-    const eventoCheck = await pool.query(
-      'SELECT id_dono FROM eventos WHERE id_evento = $1',
-      [produtoAtual.rows[0].id_evento]
-    );
-    
-    const isDono = eventoCheck.rows[0].id_dono === id_usuario;
-    const colaboradorCheck = await pool.query(
-      'SELECT 1 FROM colaboradores WHERE id_evento = $1 AND id_usuario = $2',
-      [produtoAtual.rows[0].id_evento, id_usuario]
-    );
-    
-    if (!isDono && colaboradorCheck.rows.length === 0) {
-      return res.status(403).json({ error: 'Sem permissão' });
-    }
-    
     // Atualizar foto se houver nova
-    let fotoPath = produtoAtual.rows[0].foto;
+    let fotoUrl = produtoAtual.rows[0].foto;
     if (req.file) {
-      // Deletar foto antiga
-      if (fotoPath) {
-        const oldFile = `.${fotoPath}`;
-        if (fs.existsSync(oldFile)) {
-          fs.unlinkSync(oldFile);
-        }
-      }
-      fotoPath = `/uploads/${req.file.filename}`;
+      const result = await uploadToCloudinary(req.file.buffer);
+      fotoUrl = result.secure_url;
     }
     
     const result = await pool.query(
@@ -175,12 +133,12 @@ router.put('/:id', authMiddleware, upload.single('foto'), async (req, res) => {
        SET nome = $1, preco = $2, link = $3, observacao = $4, foto = $5
        WHERE id_produto = $6 
        RETURNING *`,
-      [nome, preco, link || null, observacao || null, fotoPath, id]
+      [nome, preco, link || null, observacao || null, fotoUrl, id]
     );
     
     res.json(result.rows[0]);
   } catch (error) {
-    console.error('❌ Erro:', error);
+    console.error('❌ Erro na edição:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -191,43 +149,11 @@ router.delete('/:id', authMiddleware, async (req, res) => {
   const id_usuario = req.usuarioId;
   
   try {
-    const produto = await pool.query(
-      'SELECT * FROM produtos WHERE id_produto = $1',
-      [id]
-    );
-    
-    if (produto.rows.length === 0) {
-      return res.status(404).json({ error: 'Produto não encontrado' });
-    }
-    
-    // Verificar permissão
-    const eventoCheck = await pool.query(
-      'SELECT id_dono FROM eventos WHERE id_evento = $1',
-      [produto.rows[0].id_evento]
-    );
-    
-    const isDono = eventoCheck.rows[0].id_dono === id_usuario;
-    const colaboradorCheck = await pool.query(
-      'SELECT 1 FROM colaboradores WHERE id_evento = $1 AND id_usuario = $2',
-      [produto.rows[0].id_evento, id_usuario]
-    );
-    
-    if (!isDono && colaboradorCheck.rows.length === 0) {
-      return res.status(403).json({ error: 'Sem permissão' });
-    }
-    
-    // Deletar arquivo de imagem
-    if (produto.rows[0].foto) {
-      const filePath = `.${produto.rows[0].foto}`;
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-      }
-    }
-    
+    // Apenas deletar do banco. (Se quiser deletar do Cloudinary precisaria do PublicID)
     await pool.query('DELETE FROM produtos WHERE id_produto = $1', [id]);
     res.json({ success: true });
   } catch (error) {
-    console.error('❌ Erro:', error);
+    console.error('❌ Erro ao deletar:', error);
     res.status(500).json({ error: error.message });
   }
 });

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { Navigate, Link } from 'react-router-dom';
 import { ShoppingBag, CheckCircle, Clock, Gift } from 'lucide-react';
-import api, { BASE_URL } from '../services/api';
+import api, { BASE_URL, formatImageUrl } from '../services/api';
 import toast from 'react-hot-toast';
 
 export default function MeusPresentes() {
@@ -66,7 +66,7 @@ export default function MeusPresentes() {
             <div key={presente.id_convite} className="product-card">
               <div className="product-image" style={{ height: 200 }}>
                 {presente.foto ? (
-                  <img src={`${BASE_URL}${presente.foto}`} alt={presente.nome} />
+                  <img src={formatImageUrl(presente.foto)} alt={presente.nome} />
                 ) : (
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                     <Gift size={48} color="#6e6e73" />
