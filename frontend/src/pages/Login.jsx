@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-import { Mail, Lock } from 'lucide-react';
+import { Mail, Lock, ArrowRight } from 'lucide-react';
 import toast from 'react-hot-toast';
+import { motion } from 'framer-motion';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -13,18 +14,14 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
     if (!email || !password) {
       toast.error('Preencha todos os campos');
       return;
     }
-    
     setLoading(true);
     const result = await login(email, password);
     setLoading(false);
-    
     if (result && result.success) {
-      // Verificar se tinha um produto pendente
       const pending = localStorage.getItem('pending_product');
       if (pending) {
         const produto = JSON.parse(pending);
@@ -37,51 +34,58 @@ export default function Login() {
   };
 
   return (
-    <div style={{ minHeight: 'calc(100vh - 80px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
-      <div style={{ maxWidth: 400, width: '100%', background: 'white', borderRadius: 24, padding: 40, boxShadow: '0 8px 24px rgba(0,0,0,0.05)' }}>
-        <h2 style={{ fontSize: 28, fontWeight: 600, marginBottom: 8, textAlign: 'center' }}>Bem-vindo</h2>
-        <p style={{ color: '#6e6e73', textAlign: 'center', marginBottom: 32 }}>Faça login para continuar</p>
+    <div style={{ minHeight: 'calc(100vh - 80px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px', background: 'var(--bg-secondary)' }}>
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        style={{ maxWidth: 450, width: '100%', background: 'var(--bg-main)', border: '1px solid var(--border)', padding: '48px 40px', boxShadow: 'var(--shadow)' }}
+      >
+        <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 32, fontWeight: 700, marginBottom: 8, textAlign: 'center', color: 'var(--text-main)' }}>Bem-vindo de volta</h2>
+        <p style={{ color: 'var(--text-secondary)', textAlign: 'center', marginBottom: 40, textTransform: 'uppercase', fontSize: 12, letterSpacing: 1 }}>Acesse sua experiência exclusiva</p>
         
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: 20 }}>
-            <label style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>Email</label>
+          <div className="form-group">
+            <label className="form-label">Email</label>
             <div style={{ position: 'relative' }}>
-              <Mail size={18} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#8e8e93' }} />
+              <Mail size={18} style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }} />
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                style={{ width: '100%', padding: '12px 16px 12px 40px', border: '1px solid #d2d2d6', borderRadius: 12, fontSize: 16 }}
+                className="form-input"
+                style={{ paddingLeft: 48 }}
                 placeholder="seu@email.com"
               />
             </div>
           </div>
           
-          <div style={{ marginBottom: 24 }}>
-            <label style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>Senha</label>
+          <div className="form-group">
+            <label className="form-label">Senha</label>
             <div style={{ position: 'relative' }}>
-              <Lock size={18} style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#8e8e93' }} />
+              <Lock size={18} style={{ position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)', color: 'var(--text-secondary)' }} />
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                style={{ width: '100%', padding: '12px 16px 12px 40px', border: '1px solid #d2d2d6', borderRadius: 12, fontSize: 16 }}
+                className="form-input"
+                style={{ paddingLeft: 48 }}
                 placeholder="••••••••"
               />
             </div>
           </div>
           
-          <button type="submit" disabled={loading} style={{ width: '100%', padding: '14px', background: '#0071e3', color: 'white', border: 'none', borderRadius: 12, fontSize: 16, fontWeight: 600, cursor: 'pointer' }}>
-            {loading ? 'Entrando...' : 'Entrar'}
+          <button type="submit" disabled={loading} className="btn-primary" style={{ width: '100%', padding: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+            {loading ? 'Processando...' : 'Acessar Conta'}
+            {!loading && <ArrowRight size={18} />}
           </button>
         </form>
         
-        <p style={{ textAlign: 'center', marginTop: 24, fontSize: 14, color: '#6e6e73' }}>
-          Não tem conta? <Link to="/cadastro" style={{ color: '#0071e3', textDecoration: 'none' }}>Cadastre-se</Link>
+        <p style={{ textAlign: 'center', marginTop: 32, fontSize: 14, color: 'var(--text-secondary)' }}>
+          Ainda não possui acesso? <Link to="/cadastro" style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none' }}>Solicitar Cadastro</Link>
         </p>
-      </div>
+      </motion.div>
     </div>
   );
-}
+}
