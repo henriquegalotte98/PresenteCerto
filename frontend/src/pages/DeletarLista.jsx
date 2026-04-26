@@ -34,7 +34,7 @@ const BotaoDeletar = ({ eventoId, onDeleteSuccess }) => {
       className="btn-deletar"
       style={{
         backgroundColor: '#dc3545',
-        color: 'white',
+        color: 'var(--bg-main)', // Using bg-main for text contrast on red, or white
         border: 'none',
         padding: '8px 16px',
         borderRadius: '4px',

@@ -232,12 +232,12 @@ export default function PainelDono() {
     if (!evento && !loading) {
         return (
             <div style={{ maxWidth: 600, margin: '0 auto', padding: '80px 20px', textAlign: 'center' }}>
-                <Gift size={64} color="#c6c6c8" style={{ marginBottom: 24 }} />
+                <Gift size={64} color="var(--border-subtle)" style={{ marginBottom: 24 }} />
                 <h2 style={{ fontSize: 28, marginBottom: 16 }}>Você ainda não tem nenhum evento</h2>
-                <p style={{ color: '#6e6e73', marginBottom: 32 }}>Crie seu primeiro evento para começar a adicionar presentes</p>
+                <p style={{ color: 'var(--text-secondary)', marginBottom: 32 }}>Crie seu primeiro evento para começar a adicionar presentes</p>
                 <button
                     onClick={() => navigate('/criar-evento')}
-                    style={{ padding: '12px 24px', background: '#0071e3', color: 'white', border: 'none', borderRadius: 8, cursor: 'pointer', fontSize: 16 }}
+                    style={{ padding: '12px 24px', background: 'var(--primary)', color: 'var(--text-on-primary)', border: 'none', borderRadius: 8, cursor: 'pointer', fontSize: 16 }}
                 >
                     Criar meu primeiro evento
                 </button>
@@ -248,7 +248,7 @@ export default function PainelDono() {
     if (loading || !evento) {
         return (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
-                <div style={{ width: 40, height: 40, border: '3px solid #e5e5e7', borderTopColor: '#0071e3', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+                <div style={{ width: 40, height: 40, border: '3px solid var(--border-subtle)', borderTopColor: 'var(--primary)', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
             </div>
         );
     }
@@ -256,32 +256,32 @@ export default function PainelDono() {
     return (
         <div style={{ maxWidth: 1200, margin: '0 auto', padding: '60px 20px' }}>
             {/* Header do Evento */}
-            <div style={{ background: 'white', borderRadius: 20, padding: 32, marginBottom: 32, boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+            <div style={{ background: 'var(--bg-main)', borderRadius: 20, padding: 32, marginBottom: 32, boxShadow: 'var(--shadow)' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start', flexWrap: 'wrap', gap: 16 }}>
                     <div style={{ flex: 1 }}>
                         <h1 style={{ fontSize: 32, fontWeight: 600, marginBottom: 8 }}>{evento.titulo}</h1>
-                        <p style={{ color: '#6e6e73', marginBottom: 16 }}>{evento.descricao || 'Sem descrição'}</p>
+                        <p style={{ color: 'var(--text-secondary)', marginBottom: 16 }}>{evento.descricao || 'Sem descrição'}</p>
 
                         <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', marginBottom: 16 }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                                 <Calendar size={16} color="#6e6e73" />
-                                <span style={{ fontSize: 14, color: '#6e6e73' }}>
+                                <span style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
                                     {evento.data_evento ? new Date(evento.data_evento).toLocaleDateString('pt-BR') : 'Data a definir'}
                                 </span>
                             </div>
                             {evento.local && (
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                                     <MapPin size={16} color="#6e6e73" />
-                                    <span style={{ fontSize: 14, color: '#6e6e73' }}>{evento.local}</span>
+                                    <span style={{ fontSize: 14, color: 'var(--text-secondary)' }}>{evento.local}</span>
                                 </div>
                             )}
                         </div>
 
                         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                            <code style={{ background: '#f5f5f7', padding: '8px 16px', borderRadius: 8, fontSize: 16, fontFamily: 'monospace', letterSpacing: 1 }}>
+                            <code style={{ background: 'var(--bg-tertiary)', padding: '8px 16px', borderRadius: 8, fontSize: 16, fontFamily: 'monospace', letterSpacing: 1, color: 'var(--text-main)' }}>
                                 {evento.codigo}
                             </code>
-                            <button onClick={copiarCodigo} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#0071e3', padding: 8 }}>
+                            <button onClick={copiarCodigo} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--primary)', padding: 8 }}>
                                 <Copy size={18} />
                             </button>
                         </div>
@@ -290,14 +290,14 @@ export default function PainelDono() {
                     <div style={{ display: 'flex', gap: 12 }}>
                         <button
                             onClick={() => setShowColaborador(true)}
-                            style={{ padding: '10px 20px', background: 'transparent', border: '1px solid #0071e3', color: '#0071e3', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8 }}
+                            style={{ padding: '10px 20px', background: 'transparent', border: '1px solid var(--primary)', color: 'var(--primary)', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8 }}
                         >
                             <Users size={16} />
                             Adicionar cônjuge
                         </button>
                         <button
                             onClick={() => navigate(`/lista/${evento.codigo}`)}
-                            style={{ padding: '10px 20px', background: '#e5e5e7', border: 'none', color: '#1d1d1f', borderRadius: 8, cursor: 'pointer' }}
+                            style={{ padding: '10px 20px', background: 'var(--bg-tertiary)', border: 'none', color: 'var(--text-main)', borderRadius: 8, cursor: 'pointer' }}
                         >
                             Visualizar lista
                         </button>
@@ -307,17 +307,17 @@ export default function PainelDono() {
 
             {/* Estatísticas */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 16, marginBottom: 32 }}>
-                <div style={{ background: 'white', borderRadius: 16, padding: 20, textAlign: 'center' }}>
-                    <div style={{ fontSize: 32, fontWeight: 700, color: '#0071e3' }}>{produtos.length}</div>
-                    <div style={{ fontSize: 14, color: '#6e6e73' }}>Total de presentes</div>
+                <div style={{ background: 'var(--bg-main)', borderRadius: 16, padding: 20, textAlign: 'center', border: '1px solid var(--border)' }}>
+                    <div style={{ fontSize: 32, fontWeight: 700, color: 'var(--primary)' }}>{produtos.length}</div>
+                    <div style={{ fontSize: 14, color: 'var(--text-secondary)' }}>Total de presentes</div>
                 </div>
-                <div style={{ background: 'white', borderRadius: 16, padding: 20, textAlign: 'center' }}>
+                <div style={{ background: 'var(--bg-main)', borderRadius: 16, padding: 20, textAlign: 'center', border: '1px solid var(--border)' }}>
                     <div style={{ fontSize: 32, fontWeight: 700, color: '#2e7d32' }}>{produtos.filter(p => p.comprado).length}</div>
-                    <div style={{ fontSize: 14, color: '#6e6e73' }}>Presentes comprados</div>
+                    <div style={{ fontSize: 14, color: 'var(--text-secondary)' }}>Presentes comprados</div>
                 </div>
-                <div style={{ background: 'white', borderRadius: 16, padding: 20, textAlign: 'center' }}>
+                <div style={{ background: 'var(--bg-main)', borderRadius: 16, padding: 20, textAlign: 'center', border: '1px solid var(--border)' }}>
                     <div style={{ fontSize: 32, fontWeight: 700, color: '#ed6c02' }}>{produtos.filter(p => !p.comprado).length}</div>
-                    <div style={{ fontSize: 14, color: '#6e6e73' }}>Disponíveis</div>
+                    <div style={{ fontSize: 14, color: 'var(--text-secondary)' }}>Disponíveis</div>
                 </div>
             </div>
 
@@ -325,7 +325,7 @@ export default function PainelDono() {
             <div style={{ marginBottom: 24 }}>
                 <button
                     onClick={() => { resetForm(); setShowModal(true); }}
-                    style={{ padding: '12px 24px', background: '#0071e3', color: 'white', border: 'none', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, fontWeight: 500 }}
+                    style={{ padding: '12px 24px', background: 'var(--primary)', color: 'var(--text-on-primary)', border: 'none', borderRadius: 8, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, fontWeight: 500 }}
                 >
                     <Plus size={18} />
                     Adicionar presente
@@ -340,10 +340,10 @@ export default function PainelDono() {
                 />
             </div>
             {/* Lista de produtos */}
-            <div style={{ background: 'white', borderRadius: 16, overflow: 'auto', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+            <div style={{ background: 'var(--bg-main)', borderRadius: 16, overflow: 'auto', boxShadow: 'var(--shadow)', border: '1px solid var(--border)' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                     <thead>
-                        <tr style={{ borderBottom: '1px solid #e5e5e7', background: '#f5f5f7' }}>
+                        <tr style={{ borderBottom: '1px solid var(--border-subtle)', background: 'var(--bg-tertiary)' }}>
                             <th style={{ textAlign: 'left', padding: '16px', fontWeight: 600 }}>Produto</th>
                             <th style={{ textAlign: 'left', padding: '16px', fontWeight: 600 }}>Preço</th>
                             <th style={{ textAlign: 'left', padding: '16px', fontWeight: 600 }}>Status</th>
@@ -354,12 +354,12 @@ export default function PainelDono() {
                     <tbody>
                         {produtos.length === 0 ? (
                             <tr>
-                                <td colSpan="5" style={{ textAlign: 'center', padding: '60px', color: '#8e8e93' }}>
+                                <td colSpan="5" style={{ textAlign: 'center', padding: '60px', color: 'var(--text-secondary)' }}>
                                     <Gift size={48} color="#c6c6c8" style={{ marginBottom: 16 }} />
                                     <div>Nenhum produto cadastrado</div>
                                     <button
                                         onClick={() => { resetForm(); setShowModal(true); }}
-                                        style={{ marginTop: 16, padding: '8px 16px', background: '#0071e3', color: 'white', border: 'none', borderRadius: 8, cursor: 'pointer' }}
+                                        style={{ marginTop: 16, padding: '8px 16px', background: 'var(--primary)', color: 'var(--text-on-primary)', border: 'none', borderRadius: 8, cursor: 'pointer' }}
                                     >
                                         Adicionar primeiro presente
                                     </button>
@@ -367,7 +367,7 @@ export default function PainelDono() {
                             </tr>
                         ) : (
                             produtos.map((produto) => (
-                                <tr key={produto.id_produto} style={{ borderBottom: '1px solid #e5e5e7' }}>
+                                <tr key={produto.id_produto} style={{ borderBottom: '1px solid var(--border-subtle)' }}>
                                     <td style={{ padding: '16px' }}>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                                             {produto.foto ? (
@@ -377,21 +377,21 @@ export default function PainelDono() {
                                                     style={{ width: 48, height: 48, borderRadius: 8, objectFit: 'cover' }}
                                                 />
                                             ) : (
-                                                <div style={{ width: 48, height: 48, background: '#f5f5f7', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                                    <Gift size={24} color="#6e6e73" />
+                                                <div style={{ width: 48, height: 48, background: 'var(--bg-tertiary)', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                                    <Gift size={24} color="var(--text-secondary)" />
                                                 </div>
                                             )}
                                             <div>
                                                 <div style={{ fontWeight: 500 }}>{produto.nome}</div>
                                                 {produto.link && (
-                                                    <a href={produto.link} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: '#0071e3', textDecoration: 'none' }}>
+                                                    <a href={produto.link} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, color: 'var(--primary)', textDecoration: 'none' }}>
                                                         Ver link →
                                                     </a>
                                                 )}
                                             </div>
                                         </div>
                                     </td>
-                                    <td style={{ padding: '16px', fontWeight: 600, color: '#0071e3' }}>
+                                    <td style={{ padding: '16px', fontWeight: 600, color: 'var(--primary)' }}>
                                         R$ {parseFloat(produto.preco).toFixed(2)}
                                     </td>
                                     <td style={{ padding: '16px' }}>
@@ -417,14 +417,14 @@ export default function PainelDono() {
                                                 ))}
                                             </div>
                                         ) : (
-                                            <span style={{ fontSize: 12, color: '#8e8e93' }}>-</span>
+                                            <span style={{ fontSize: 12, color: 'var(--text-secondary)' }}>-</span>
                                         )}
                                     </td>
                                     <td style={{ padding: '16px' }}>
                                         <div style={{ display: 'flex', gap: 8 }}>
                                             <button
                                                 onClick={() => editarProduto(produto)}
-                                                style={{ padding: '6px 12px', background: 'transparent', border: '1px solid #0071e3', color: '#0071e3', borderRadius: 6, cursor: 'pointer', fontSize: 12 }}
+                                                style={{ padding: '6px 12px', background: 'transparent', border: '1px solid var(--primary)', color: 'var(--primary)', borderRadius: 6, cursor: 'pointer', fontSize: 12 }}
                                             >
                                                 <Edit2 size={14} style={{ display: 'inline', marginRight: 4 }} />
                                                 Editar
@@ -484,14 +484,14 @@ export default function PainelDono() {
                     zIndex: 2000, padding: '20px'
                 }}>
                     <div style={{
-                        background: 'white', borderRadius: 24,
+                        background: 'var(--bg-main)', borderRadius: 24,
                         maxWidth: 550, width: '100%',
                         maxHeight: '90vh', overflow: 'auto',
                         boxShadow: '0 20px 40px rgba(0,0,0,0.2)'
                     }}>
                         <div style={{ padding: '24px 24px 0 24px' }}>
                             <h2 style={{ fontSize: 24, fontWeight: 600 }}>{editing ? 'Editar' : 'Novo'} presente</h2>
-                            <p style={{ color: '#6e6e73', marginTop: 4 }}>Preencha as informações do produto</p>
+                            <p style={{ color: 'var(--text-secondary)', marginTop: 4 }}>Preencha as informações do produto</p>
                         </div>
 
                         <div style={{ padding: 24 }}>
@@ -502,7 +502,7 @@ export default function PainelDono() {
                                     type="text"
                                     value={formData.nome}
                                     onChange={(e) => setFormData({ ...formData, nome: e.target.value })}
-                                    style={{ width: '100%', padding: '12px', border: '1px solid #d2d2d6', borderRadius: 8, fontSize: 16 }}
+                                    style={{ width: '100%', padding: '12px', border: '1px solid var(--border-subtle)', borderRadius: 8, fontSize: 16, background: 'var(--input-bg)', color: 'var(--text-main)' }}
                                     placeholder="Ex: Jogo de Panelas"
                                 />
                             </div>
@@ -515,7 +515,7 @@ export default function PainelDono() {
                                     step="0.01"
                                     value={formData.preco}
                                     onChange={(e) => setFormData({ ...formData, preco: e.target.value })}
-                                    style={{ width: '100%', padding: '12px', border: '1px solid #d2d2d6', borderRadius: 8, fontSize: 16 }}
+                                    style={{ width: '100%', padding: '12px', border: '1px solid var(--border-subtle)', borderRadius: 8, fontSize: 16, background: 'var(--input-bg)', color: 'var(--text-main)' }}
                                     placeholder="0,00"
                                 />
                             </div>
@@ -527,7 +527,7 @@ export default function PainelDono() {
                                     type="url"
                                     value={formData.link}
                                     onChange={(e) => setFormData({ ...formData, link: e.target.value })}
-                                    style={{ width: '100%', padding: '12px', border: '1px solid #d2d2d6', borderRadius: 8, fontSize: 16 }}
+                                    style={{ width: '100%', padding: '12px', border: '1px solid var(--border-subtle)', borderRadius: 8, fontSize: 16, background: 'var(--input-bg)', color: 'var(--text-main)' }}
                                     placeholder="https://www.exemplo.com/produto"
                                 />
                             </div>
@@ -539,7 +539,7 @@ export default function PainelDono() {
                                     value={formData.observacao}
                                     onChange={(e) => setFormData({ ...formData, observacao: e.target.value })}
                                     rows="3"
-                                    style={{ width: '100%', padding: '12px', border: '1px solid #d2d2d6', borderRadius: 8, fontSize: 16, fontFamily: 'inherit' }}
+                                    style={{ width: '100%', padding: '12px', border: '1px solid var(--border-subtle)', borderRadius: 8, fontSize: 16, fontFamily: 'inherit', background: 'var(--input-bg)', color: 'var(--text-main)' }}
                                     placeholder="Cor, tamanho, modelo, etc..."
                                 />
                             </div>
@@ -554,7 +554,7 @@ export default function PainelDono() {
                                     style={{
                                         width: '100%',
                                         padding: '8px',
-                                        border: '1px solid #d2d2d6',
+                                        border: '1px solid var(--border-subtle)',
                                         borderRadius: 8,
                                         cursor: 'pointer'
                                     }}
@@ -576,13 +576,13 @@ export default function PainelDono() {
                         <div style={{ padding: '0 24px 24px 24px', display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
                             <button
                                 onClick={() => setShowModal(false)}
-                                style={{ padding: '10px 20px', background: 'transparent', border: '1px solid #d2d2d6', borderRadius: 8, cursor: 'pointer' }}
+                                style={{ padding: '10px 20px', background: 'transparent', border: '1px solid var(--border-subtle)', borderRadius: 8, cursor: 'pointer', color: 'var(--text-main)' }}
                             >
                                 Cancelar
                             </button>
                             <button
                                 onClick={salvarProduto}
-                                style={{ padding: '10px 24px', background: '#0071e3', color: 'white', border: 'none', borderRadius: 8, cursor: 'pointer', fontWeight: 500 }}
+                                style={{ padding: '10px 24px', background: 'var(--primary)', color: 'var(--text-on-primary)', border: 'none', borderRadius: 8, cursor: 'pointer', fontWeight: 500 }}
                             >
                                 {editing ? 'Atualizar' : 'Adicionar'} presente
                             </button>

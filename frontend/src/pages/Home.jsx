@@ -23,7 +23,7 @@ export default function Home() {
             margin: '0 auto 40px',
             boxShadow: 'var(--shadow)'
           }}>
-            <Gift size={40} color="var(--bg-main)" />
+            <Gift size={40} color="var(--text-on-primary)" />
           </div>
 
           <h1>

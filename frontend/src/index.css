@@ -4,10 +4,14 @@
   --primary-hover: #C5A028;
   --bg-main: #FFFFFF;
   --bg-secondary: #FAFAFA;
+  --bg-tertiary: #F5F5F7;
   --text-main: #1A1A1A;
   --text-secondary: #666666;
+  --text-on-primary: #1A1A1A;
   --accent: #D4AF37;
   --border: rgba(0, 0, 0, 0.08);
+  --border-subtle: #E5E5E7;
+  --input-bg: #FFFFFF;
   --glass: rgba(255, 255, 255, 0.8);
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   
@@ -23,10 +27,14 @@
   --primary-hover: #FFFFFF;
   --bg-main: #0F0F0F;
   --bg-secondary: #1A1A1A;
+  --bg-tertiary: #252525;
   --text-main: #FFFFFF;
   --text-secondary: #A0A0A0;
+  --text-on-primary: #0F0F0F;
   --accent: #E5E5E5;
   --border: rgba(255, 255, 255, 0.1);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --input-bg: #1A1A1A;
   --glass: rgba(15, 15, 15, 0.8);
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
@@ -37,10 +45,14 @@
   --primary-hover: #D05F84;
   --bg-main: #FFF9FA;
   --bg-secondary: #FEEFF2;
+  --bg-tertiary: #FDE2E8;
   --text-main: #4A3037;
   --text-secondary: #8E7078;
+  --text-on-primary: #FFFFFF;
   --accent: #E27396;
   --border: rgba(226, 115, 150, 0.15);
+  --border-subtle: rgba(226, 115, 150, 0.1);
+  --input-bg: #FFFFFF;
   --glass: rgba(255, 249, 250, 0.8);
 }
 
@@ -50,10 +62,14 @@
   --primary-hover: #C5A028;
   --bg-main: #062C21;
   --bg-secondary: #0A3D2E;
+  --bg-tertiary: #0D4D3A;
   --text-main: #F4F1EA;
   --text-secondary: #A8C1B7;
+  --text-on-primary: #062C21;
   --accent: #D4AF37;
   --border: rgba(212, 175, 55, 0.2);
+  --border-subtle: rgba(212, 175, 55, 0.1);
+  --input-bg: #0A3D2E;
   --glass: rgba(6, 44, 33, 0.8);
 }
 
@@ -63,10 +79,14 @@
   --primary-hover: #005F92;
   --bg-main: #011627;
   --bg-secondary: #012A4A;
+  --bg-tertiary: #013A63;
   --text-main: #FDFFFC;
   --text-secondary: #A9D6E5;
+  --text-on-primary: #FFFFFF;
   --accent: #0077B6;
   --border: rgba(0, 119, 182, 0.2);
+  --border-subtle: rgba(0, 119, 182, 0.1);
+  --input-bg: #012A4A;
   --glass: rgba(1, 22, 39, 0.8);
 }
 
@@ -76,10 +96,14 @@
   --primary-hover: #1E293B;
   --bg-main: #F8FAFC;
   --bg-secondary: #F1F5F9;
+  --bg-tertiary: #E2E8F0;
   --text-main: #0F172A;
   --text-secondary: #64748B;
+  --text-on-primary: #FFFFFF;
   --accent: #334155;
   --border: rgba(51, 65, 85, 0.1);
+  --border-subtle: #CBD5E1;
+  --input-bg: #FFFFFF;
   --glass: rgba(248, 250, 252, 0.8);
 }
 
@@ -204,7 +228,7 @@ body {
 /* Botões */
 .btn-primary {
   background: var(--primary);
-  color: var(--bg-main);
+  color: var(--text-on-primary);
   border: none;
   padding: 12px 28px;
   border-radius: 4px;
@@ -342,16 +366,16 @@ body {
 }
 
 .status-purchased {
-  background: #ffebee;
+  background: rgba(198, 40, 40, 0.1);
   color: #c62828;
 }
 
 .product-buyers {
   font-size: 13px;
-  color: #6e6e73;
+  color: var(--text-secondary);
   margin-top: 12px;
   padding-top: 12px;
-  border-top: 1px solid #e5e5e7;
+  border-top: 1px solid var(--border);
 }
 
 /* Modal */
@@ -442,8 +466,8 @@ body {
 .spinner {
   width: 40px;
   height: 40px;
-  border: 3px solid #e5e5e7;
-  border-top-color: #0071e3;
+  border: 3px solid var(--bg-tertiary);
+  border-top-color: var(--primary);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -542,9 +566,10 @@ body {
 /* Tabela Admin */
 .admin-table {
   width: 100%;
-  background: white;
+  background: var(--bg-main);
   border-radius: 12px;
   overflow: auto;
+  border: 1px solid var(--border);
 }
 
 .admin-table table {
@@ -555,18 +580,18 @@ body {
 .admin-table th {
   text-align: left;
   padding: 16px;
-  background: #f5f5f7;
+  background: var(--bg-tertiary);
   font-weight: 600;
   font-size: 14px;
 }
 
 .admin-table td {
   padding: 16px;
-  border-bottom: 1px solid #e5e5e7;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .admin-table tr:hover {
-  background: #f5f5f7;
+  background: var(--bg-secondary);
 }
 
 /* Badges */
@@ -611,7 +636,7 @@ body {
     right: -100%;
     width: 80%;
     height: 100vh;
-    background: white;
+    background: var(--bg-main);
     flex-direction: column;
     padding: 80px 24px;
     transition: 0.3s ease-in-out;
@@ -631,7 +656,7 @@ body {
     font-size: 18px;
     width: 100%;
     padding: 12px 0;
-    border-bottom: 1px solid #f5f5f7;
+    border-bottom: 1px solid var(--border-subtle);
   }
 
   .nav-user-info {

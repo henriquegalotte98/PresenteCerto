@@ -31,20 +31,20 @@ export default function BuscarLista() {
 
   return (
     <div style={{ minHeight: 'calc(100vh - 80px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
-      <div style={{ maxWidth: 500, width: '100%', background: 'white', borderRadius: 24, padding: 48, boxShadow: '0 8px 24px rgba(0,0,0,0.05)' }}>
-        <div style={{ width: 60, height: 60, background: '#0071e3', borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
-          <Search size={30} color="white" />
+      <div style={{ maxWidth: 500, width: '100%', background: 'var(--bg-main)', borderRadius: 24, padding: 48, boxShadow: 'var(--shadow)', border: '1px solid var(--border)' }}>
+        <div style={{ width: 60, height: 60, background: 'var(--primary)', borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
+          <Search size={30} color="var(--text-on-primary)" />
         </div>
         
-        <h2 style={{ fontSize: 28, fontWeight: 600, marginBottom: 8, textAlign: 'center' }}>Buscar lista</h2>
-        <p style={{ color: '#6e6e73', textAlign: 'center', marginBottom: 32 }}>Digite o código que você recebeu</p>
+        <h2 style={{ fontSize: 28, fontWeight: 600, marginBottom: 8, textAlign: 'center', color: 'var(--text-main)' }}>Buscar lista</h2>
+        <p style={{ color: 'var(--text-secondary)', textAlign: 'center', marginBottom: 32 }}>Digite o código que você recebeu</p>
         
         <input
           type="text"
           placeholder="Ex: ABC12345"
           value={codigo}
           onChange={(e) => setCodigo(e.target.value.toUpperCase())}
-          style={{ width: '100%', padding: '16px', textAlign: 'center', fontSize: 20, letterSpacing: 3, border: '2px solid #e5e5e7', borderRadius: 12, marginBottom: 24, fontFamily: 'monospace' }}
+          style={{ width: '100%', padding: '16px', textAlign: 'center', fontSize: 20, letterSpacing: 3, border: '2px solid var(--border-subtle)', borderRadius: 12, marginBottom: 24, fontFamily: 'monospace', background: 'var(--input-bg)', color: 'var(--text-main)' }}
           maxLength={8}
           autoFocus
         />
@@ -52,13 +52,13 @@ export default function BuscarLista() {
         <button 
           onClick={buscarLista} 
           disabled={loading} 
-          style={{ width: '100%', padding: '14px', background: '#0071e3', color: 'white', border: 'none', borderRadius: 12, fontSize: 16, fontWeight: 600, cursor: 'pointer' }}
+          style={{ width: '100%', padding: '14px', background: 'var(--primary)', color: 'var(--text-on-primary)', border: 'none', borderRadius: 12, fontSize: 16, fontWeight: 600, cursor: 'pointer' }}
         >
           {loading ? 'Buscando...' : 'Ver lista de presentes'}
         </button>
         
         <div style={{ marginTop: 32, textAlign: 'center' }}>
-          <p style={{ fontSize: 14, color: '#8e8e93' }}>
+          <p style={{ fontSize: 14, color: 'var(--text-secondary)' }}>
             Não tem um código? <br />
             O código é fornecido pelo organizador do evento
           </p>

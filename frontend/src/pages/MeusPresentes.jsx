@@ -75,20 +75,20 @@ export default function MeusPresentes() {
   return (
     <div className="container" style={{ padding: '60px 20px' }}>
       <div style={{ textAlign: 'center', marginBottom: 48 }}>
-        <div style={{ width: 70, height: 70, background: '#0071e3', borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-          <ShoppingBag size={35} color="white" />
+        <div style={{ width: 70, height: 70, background: 'var(--primary)', borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+          <ShoppingBag size={35} color="var(--text-on-primary)" />
         </div>
         <h1 style={{ fontSize: 36, fontWeight: 600, marginBottom: 8 }}>Meus Presentes</h1>
-        <p style={{ color: '#6e6e73' }}>
+        <p style={{ color: 'var(--text-secondary)' }}>
           Olá, {user.nome}! Aqui estão os presentes que você escolheu
         </p>
       </div>
 
       {presentes.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '80px 20px', background: 'white', borderRadius: 24 }}>
-          <Gift size={64} color="#c6c6c8" style={{ marginBottom: 20 }} />
+        <div style={{ textAlign: 'center', padding: '80px 20px', background: 'var(--bg-main)', borderRadius: 24, border: '1px solid var(--border)' }}>
+          <Gift size={64} color="var(--border-subtle)" style={{ marginBottom: 20 }} />
           <h3 style={{ fontSize: 20, fontWeight: 500, marginBottom: 8 }}>Nenhum presente ainda</h3>
-          <p style={{ color: '#8e8e93', marginBottom: 24 }}>Você ainda não escolheu nenhum presente para levar</p>
+          <p style={{ color: 'var(--text-secondary)', marginBottom: 24 }}>Você ainda não escolheu nenhum presente para levar</p>
           <Link to="/buscar" className="btn-primary" style={{ display: 'inline-block' }}>
             Buscar uma lista
           </Link>
@@ -102,7 +102,7 @@ export default function MeusPresentes() {
                   <img src={formatImageUrl(presente.foto)} alt={presente.nome} />
                 ) : (
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-                    <Gift size={48} color="#6e6e73" />
+                    <Gift size={48} color="var(--text-secondary)" />
                   </div>
                 )}
               </div>
@@ -120,7 +120,7 @@ export default function MeusPresentes() {
                   </span>
                 </div>
                 
-                <p style={{ fontSize: 13, color: '#6e6e73', marginBottom: 8 }}>
+                <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 8 }}>
                   <strong>Evento:</strong> {presente.evento_titulo}
                 </p>
                 

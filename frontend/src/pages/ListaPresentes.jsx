@@ -98,28 +98,29 @@ export default function ListaPresentes() {
 
             toast.custom((t) => (
                 <div style={{
-                    background: 'white',
+                    background: 'var(--bg-main)',
                     borderRadius: 16,
                     padding: 20,
-                    boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
+                    boxShadow: 'var(--shadow)',
                     maxWidth: 320,
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    border: '1px solid var(--border)'
                 }}>
-                    <Heart size={32} color="#0071e3" style={{ marginBottom: 12 }} />
-                    <p style={{ marginBottom: 16, fontSize: 14 }}>Faça login para comprometer este presente</p>
+                    <Heart size={32} color="var(--primary)" style={{ marginBottom: 12 }} />
+                    <p style={{ marginBottom: 16, fontSize: 14, color: 'var(--text-main)' }}>Faça login para comprometer este presente</p>
                     <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
                         <button
                             onClick={() => {
                                 toast.dismiss(t.id);
                                 navigate('/login');
                             }}
-                            style={{ padding: '8px 16px', background: '#0071e3', color: 'white', border: 'none', borderRadius: 8, cursor: 'pointer' }}
+                            style={{ padding: '8px 16px', background: 'var(--primary)', color: 'var(--text-on-primary)', border: 'none', borderRadius: 8, cursor: 'pointer' }}
                         >
                             Fazer login
                         </button>
                         <button
                             onClick={() => toast.dismiss(t.id)}
-                            style={{ padding: '8px 16px', background: 'transparent', border: '1px solid #d2d2d6', borderRadius: 8, cursor: 'pointer' }}
+                            style={{ padding: '8px 16px', background: 'transparent', border: '1px solid var(--border-subtle)', borderRadius: 8, cursor: 'pointer', color: 'var(--text-secondary)' }}
                         >
                             Cancelar
                         </button>
@@ -159,7 +160,7 @@ export default function ListaPresentes() {
     if (loading) {
         return (
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px' }}>
-                <div style={{ width: 40, height: 40, border: '3px solid #e5e5e7', borderTopColor: '#0071e3', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+                <div style={{ width: 40, height: 40, border: '3px solid var(--border-subtle)', borderTopColor: 'var(--primary)', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
             </div>
         );
     }
@@ -168,7 +169,7 @@ export default function ListaPresentes() {
         return (
             <div style={{ textAlign: 'center', padding: '80px 20px' }}>
                 <h2>Evento não encontrado</h2>
-                <button onClick={() => navigate('/buscar')} style={{ marginTop: 20, padding: '12px 24px', background: '#0071e3', color: 'white', border: 'none', borderRadius: 8, cursor: 'pointer' }}>
+                <button onClick={() => navigate('/buscar')} style={{ marginTop: 20, padding: '12px 24px', background: 'var(--primary)', color: 'var(--text-on-primary)', border: 'none', borderRadius: 8, cursor: 'pointer' }}>
                     Voltar para buscar
                 </button>
             </div>
@@ -178,30 +179,30 @@ export default function ListaPresentes() {
     return (
         <div>
             {/* Header do Evento */}
-            <div style={{ background: 'white', borderBottom: '1px solid #e5e5e7', padding: '40px 0' }}>
+            <div style={{ background: 'var(--bg-main)', borderBottom: '1px solid var(--border-subtle)', padding: '40px 0' }}>
                 <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 20px' }}>
-                    <h1 style={{ fontSize: 36, fontWeight: 600, marginBottom: 16 }}>{evento.titulo}</h1>
-                    <p style={{ color: '#6e6e73', marginBottom: 24 }}>{evento.descricao || 'Sem descrição'}</p>
+                    <h1 style={{ fontSize: 36, fontWeight: 600, marginBottom: 16, color: 'var(--text-main)' }}>{evento.titulo}</h1>
+                    <p style={{ color: 'var(--text-secondary)', marginBottom: 24 }}>{evento.descricao || 'Sem descrição'}</p>
 
                     <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <Calendar size={18} color="#0071e3" />
+                            <Calendar size={18} color="var(--primary)" />
                             <span>{evento.data_evento ? new Date(evento.data_evento).toLocaleDateString('pt-BR') : 'Data a definir'}</span>
                         </div>
                         {evento.local && (
                             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                <MapPin size={18} color="#0071e3" />
+                                <MapPin size={18} color="var(--primary)" />
                                 <span>{evento.local}</span>
                             </div>
                         )}
                         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                            <User size={18} color="#0071e3" />
+                            <User size={18} color="var(--primary)" />
                             <span>Lista de {evento.dono_nome}</span>
                         </div>
                     </div>
 
                     {evento.mapa_link && (
-                        <a href={evento.mapa_link} target="_blank" rel="noopener noreferrer" style={{ marginTop: 16, display: 'inline-block', color: '#0071e3', textDecoration: 'none' }}>
+                        <a href={evento.mapa_link} target="_blank" rel="noopener noreferrer" style={{ marginTop: 16, display: 'inline-block', color: 'var(--primary)', textDecoration: 'none' }}>
                             Ver localização no mapa →
                         </a>
                     )}
@@ -218,7 +219,7 @@ export default function ListaPresentes() {
                             placeholder="Buscar presente..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            style={{ width: '100%', padding: '12px 16px 12px 48px', border: '1px solid #d2d2d6', borderRadius: 12, fontSize: 16 }}
+                            style={{ width: '100%', padding: '12px 16px 12px 48px', border: '1px solid var(--border-subtle)', borderRadius: 12, fontSize: 16, background: 'var(--input-bg)', color: 'var(--text-main)' }}
                         />
                     </div>
                 </div>
@@ -231,8 +232,8 @@ export default function ListaPresentes() {
                             border: 'none',
                             borderRadius: 20,
                             cursor: 'pointer',
-                            background: filter === 'all' ? '#0071e3' : 'transparent',
-                            color: filter === 'all' ? 'white' : '#1d1d1f',
+                            background: filter === 'all' ? 'var(--primary)' : 'transparent',
+                            color: filter === 'all' ? 'var(--text-on-primary)' : 'var(--text-main)',
                             fontWeight: 500
                         }}
                     >
@@ -245,8 +246,8 @@ export default function ListaPresentes() {
                             border: 'none',
                             borderRadius: 20,
                             cursor: 'pointer',
-                            background: filter === 'available' ? '#0071e3' : 'transparent',
-                            color: filter === 'available' ? 'white' : '#1d1d1f',
+                            background: filter === 'available' ? 'var(--primary)' : 'transparent',
+                            color: filter === 'available' ? 'var(--text-on-primary)' : 'var(--text-main)',
                             fontWeight: 500
                         }}
                     >
@@ -259,8 +260,8 @@ export default function ListaPresentes() {
                             border: 'none',
                             borderRadius: 20,
                             cursor: 'pointer',
-                            background: filter === 'purchased' ? '#0071e3' : 'transparent',
-                            color: filter === 'purchased' ? 'white' : '#1d1d1f',
+                            background: filter === 'purchased' ? 'var(--primary)' : 'transparent',
+                            color: filter === 'purchased' ? 'var(--text-on-primary)' : 'var(--text-main)',
                             fontWeight: 500
                         }}
                     >
@@ -271,14 +272,14 @@ export default function ListaPresentes() {
                 {filtered.length === 0 ? (
                     <div style={{ textAlign: 'center', padding: 80 }}>
                         <Gift size={64} color="#c6c6c8" style={{ marginBottom: 16 }} />
-                        <p style={{ color: '#8e8e93' }}>Nenhum presente encontrado</p>
+                        <p style={{ color: 'var(--text-secondary)' }}>Nenhum presente encontrado</p>
                     </div>
                 ) : (
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 24 }}>
                         {filtered.map(produto => (
-                            <div key={produto.id_produto} style={{ background: 'white', borderRadius: 16, overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', transition: 'transform 0.2s, box-shadow 0.2s', cursor: 'pointer' }}>
+                            <div key={produto.id_produto} style={{ background: 'var(--bg-main)', borderRadius: 16, overflow: 'hidden', boxShadow: 'var(--shadow)', transition: 'transform 0.2s, box-shadow 0.2s', cursor: 'pointer', border: '1px solid var(--border)' }}>
                                 {/* Imagem do produto */}
-                                <div style={{ height: 200, overflow: 'hidden', background: '#f5f5f7', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+                                <div style={{ height: 200, overflow: 'hidden', background: 'var(--bg-tertiary)', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
                                     {produto.foto ? (
                                         <img
                                             src={formatImageUrl(produto.foto)}
@@ -305,7 +306,7 @@ export default function ListaPresentes() {
 
                                 <div style={{ padding: 20 }}>
                                     <h3 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8, color: '#1d1d1f' }}>{produto.nome}</h3>
-                                    <div style={{ fontSize: 20, fontWeight: 700, color: '#0071e3', marginBottom: 12 }}>
+                                    <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--primary)', marginBottom: 12 }}>
                                         R$ {parseFloat(produto.preco).toFixed(2)}
                                     </div>
 
@@ -314,7 +315,7 @@ export default function ListaPresentes() {
                                             href={produto.link}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            style={{ display: 'block', fontSize: 13, color: '#0071e3', textDecoration: 'none', marginBottom: 12 }}
+                                            style={{ display: 'block', fontSize: 13, color: 'var(--primary)', textDecoration: 'none', marginBottom: 12 }}
                                             onClick={(e) => e.stopPropagation()}
                                         >
                                             Ver produto →
@@ -322,12 +323,12 @@ export default function ListaPresentes() {
                                     )}
 
                                     {produto.observacao && (
-                                        <p style={{ fontSize: 13, color: '#6e6e73', marginBottom: 12, lineHeight: 1.4 }}>{produto.observacao}</p>
+                                        <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 12, lineHeight: 1.4 }}>{produto.observacao}</p>
                                     )}
 
                                     {produto.convidados && produto.convidados.length > 0 && (
-                                        <div style={{ marginBottom: 16, padding: 12, background: '#f5f5f7', borderRadius: 12 }}>
-                                            <strong style={{ fontSize: 12, color: '#6e6e73' }}>Quem vai levar:</strong>
+                                        <div style={{ marginBottom: 16, padding: 12, background: 'var(--bg-tertiary)', borderRadius: 12 }}>
+                                            <strong style={{ fontSize: 12, color: 'var(--text-secondary)' }}>Quem vai levar:</strong>
                                             <div style={{ marginTop: 4 }}>
                                                 {produto.convidados.map((c, idx) => c && (
                                                     <span key={idx} style={{ fontSize: 12, display: 'inline-block', marginRight: 8, marginBottom: 4 }}>
@@ -348,8 +349,8 @@ export default function ListaPresentes() {
                                             style={{
                                                 width: '100%',
                                                 padding: '12px',
-                                                background: (user && jaComprometido(produto)) ? '#e5e5e7' : '#0071e3',
-                                                color: (user && jaComprometido(produto)) ? '#8e8e93' : 'white',
+                                                background: (user && jaComprometido(produto)) ? 'var(--bg-tertiary)' : 'var(--primary)',
+                                                color: (user && jaComprometido(produto)) ? 'var(--text-secondary)' : 'var(--text-on-primary)',
                                                 border: 'none',
                                                 borderRadius: 8,
                                                 cursor: (user && jaComprometido(produto)) ? 'not-allowed' : 'pointer',

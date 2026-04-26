@@ -59,9 +59,9 @@ export default function Cadastro() {
               transition: 'var(--transition)'
             }}
           >
-            <Gift size={28} color={tipo === 'dono' ? 'var(--bg-main)' : 'var(--primary)'} style={{ margin: '0 auto 12px' }} />
-            <div style={{ fontWeight: 700, color: tipo === 'dono' ? 'var(--bg-main)' : 'var(--text-main)', marginBottom: 4, textTransform: 'uppercase', fontSize: 11, letterSpacing: 1 }}>Organizador</div>
-            <p style={{ fontSize: 11, color: tipo === 'dono' ? 'rgba(255,255,255,0.8)' : 'var(--text-secondary)' }}>
+            <Gift size={28} color={tipo === 'dono' ? 'var(--text-on-primary)' : 'var(--primary)'} style={{ margin: '0 auto 12px' }} />
+            <div style={{ fontWeight: 700, color: tipo === 'dono' ? 'var(--text-on-primary)' : 'var(--text-main)', marginBottom: 4, textTransform: 'uppercase', fontSize: 11, letterSpacing: 1 }}>Organizador</div>
+            <p style={{ fontSize: 11, color: tipo === 'dono' ? 'var(--text-on-primary)' : 'var(--text-secondary)', opacity: tipo === 'dono' ? 0.8 : 1 }}>
               Vou criar minha lista
             </p>
           </button>
@@ -78,9 +78,9 @@ export default function Cadastro() {
               transition: 'var(--transition)'
             }}
           >
-            <Users size={28} color={tipo === 'convidado' ? 'var(--bg-main)' : 'var(--primary)'} style={{ margin: '0 auto 12px' }} />
-            <div style={{ fontWeight: 700, color: tipo === 'convidado' ? 'var(--bg-main)' : 'var(--text-main)', marginBottom: 4, textTransform: 'uppercase', fontSize: 11, letterSpacing: 1 }}>Convidado</div>
-            <p style={{ fontSize: 11, color: tipo === 'convidado' ? 'rgba(255,255,255,0.8)' : 'var(--text-secondary)' }}>
+            <Users size={28} color={tipo === 'convidado' ? 'var(--text-on-primary)' : 'var(--primary)'} style={{ margin: '0 auto 12px' }} />
+            <div style={{ fontWeight: 700, color: tipo === 'convidado' ? 'var(--text-on-primary)' : 'var(--text-main)', marginBottom: 4, textTransform: 'uppercase', fontSize: 11, letterSpacing: 1 }}>Convidado</div>
+            <p style={{ fontSize: 11, color: tipo === 'convidado' ? 'var(--text-on-primary)' : 'var(--text-secondary)', opacity: tipo === 'convidado' ? 0.8 : 1 }}>
               Vou presentear alguém
             </p>
           </button>

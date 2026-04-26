@@ -51,18 +51,18 @@ export default function CriarEvento() {
   return (
     <div style={{ maxWidth: 700, margin: '0 auto', padding: '60px 20px' }}>
       <div style={{ textAlign: 'center', marginBottom: 48 }}>
-        <div style={{ width: 70, height: 70, background: '#0071e3', borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-          <Sparkles size={35} color="white" />
+        <div style={{ width: 70, height: 70, background: 'var(--primary)', borderRadius: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+          <Sparkles size={35} color="var(--text-on-primary)" />
         </div>
-        <h1 style={{ fontSize: 36, fontWeight: 600, marginBottom: 8 }}>Criar meu evento</h1>
-        <p style={{ color: '#6e6e73' }}>
+        <h1 style={{ fontSize: 36, fontWeight: 600, marginBottom: 8, color: 'var(--text-main)' }}>Criar meu evento</h1>
+        <p style={{ color: 'var(--text-secondary)' }}>
           Olá, {user.nome}! Preencha os dados do seu evento
         </p>
       </div>
       
-      <form onSubmit={handleSubmit} style={{ background: 'white', borderRadius: 24, padding: 40, boxShadow: '0 8px 24px rgba(0,0,0,0.05)' }}>
+      <form onSubmit={handleSubmit} style={{ background: 'var(--bg-main)', borderRadius: 24, padding: 40, boxShadow: 'var(--shadow)', border: '1px solid var(--border)' }}>
         <div style={{ marginBottom: 20 }}>
-          <label style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>
+          <label style={{ display: 'block', marginBottom: 8, fontWeight: 500, color: 'var(--text-main)' }}>
             <Gift size={16} style={{ display: 'inline', marginRight: 6 }} />
             Título do evento *
           </label>
@@ -71,27 +71,27 @@ export default function CriarEvento() {
             required
             value={formData.titulo}
             onChange={(e) => setFormData({ ...formData, titulo: e.target.value })}
-            style={{ width: '100%', padding: '12px 16px', border: '1px solid #d2d2d6', borderRadius: 12, fontSize: 16 }}
+            style={{ width: '100%', padding: '12px 16px', border: '1px solid var(--border-subtle)', borderRadius: 12, fontSize: 16, background: 'var(--input-bg)', color: 'var(--text-main)' }}
             placeholder="Ex: Casamento João & Maria"
           />
         </div>
         
         <div style={{ marginBottom: 20 }}>
-          <label style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>
+          <label style={{ display: 'block', marginBottom: 8, fontWeight: 500, color: 'var(--text-main)' }}>
             <FileText size={16} style={{ display: 'inline', marginRight: 6 }} />
             Descrição
           </label>
           <textarea
             value={formData.descricao}
             onChange={(e) => setFormData({ ...formData, descricao: e.target.value })}
-            style={{ width: '100%', padding: '12px 16px', border: '1px solid #d2d2d6', borderRadius: 12, fontSize: 16, fontFamily: 'inherit' }}
+            style={{ width: '100%', padding: '12px 16px', border: '1px solid var(--border-subtle)', borderRadius: 12, fontSize: 16, fontFamily: 'inherit', background: 'var(--input-bg)', color: 'var(--text-main)' }}
             rows="3"
             placeholder="Detalhes sobre o evento..."
           />
         </div>
         
         <div style={{ marginBottom: 20 }}>
-          <label style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>
+          <label style={{ display: 'block', marginBottom: 8, fontWeight: 500, color: 'var(--text-main)' }}>
             <Calendar size={16} style={{ display: 'inline', marginRight: 6 }} />
             Data do evento *
           </label>
@@ -100,12 +100,12 @@ export default function CriarEvento() {
             required
             value={formData.data_evento}
             onChange={(e) => setFormData({ ...formData, data_evento: e.target.value })}
-            style={{ width: '100%', padding: '12px 16px', border: '1px solid #d2d2d6', borderRadius: 12, fontSize: 16 }}
+            style={{ width: '100%', padding: '12px 16px', border: '1px solid var(--border-subtle)', borderRadius: 12, fontSize: 16, background: 'var(--input-bg)', color: 'var(--text-main)' }}
           />
         </div>
         
         <div style={{ marginBottom: 20 }}>
-          <label style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>
+          <label style={{ display: 'block', marginBottom: 8, fontWeight: 500, color: 'var(--text-main)' }}>
             <MapPin size={16} style={{ display: 'inline', marginRight: 6 }} />
             Local
           </label>
@@ -113,13 +113,13 @@ export default function CriarEvento() {
             type="text"
             value={formData.local}
             onChange={(e) => setFormData({ ...formData, local: e.target.value })}
-            style={{ width: '100%', padding: '12px 16px', border: '1px solid #d2d2d6', borderRadius: 12, fontSize: 16 }}
+            style={{ width: '100%', padding: '12px 16px', border: '1px solid var(--border-subtle)', borderRadius: 12, fontSize: 16, background: 'var(--input-bg)', color: 'var(--text-main)' }}
             placeholder="Endereço completo do evento"
           />
         </div>
         
         <div style={{ marginBottom: 24 }}>
-          <label style={{ display: 'block', marginBottom: 8, fontWeight: 500 }}>
+          <label style={{ display: 'block', marginBottom: 8, fontWeight: 500, color: 'var(--text-main)' }}>
             <LinkIcon size={16} style={{ display: 'inline', marginRight: 6 }} />
             Link do mapa (Google Maps)
           </label>
@@ -127,12 +127,12 @@ export default function CriarEvento() {
             type="url"
             value={formData.mapa_link}
             onChange={(e) => setFormData({ ...formData, mapa_link: e.target.value })}
-            style={{ width: '100%', padding: '12px 16px', border: '1px solid #d2d2d6', borderRadius: 12, fontSize: 16 }}
+            style={{ width: '100%', padding: '12px 16px', border: '1px solid var(--border-subtle)', borderRadius: 12, fontSize: 16, background: 'var(--input-bg)', color: 'var(--text-main)' }}
             placeholder="https://maps.google.com/..."
           />
         </div>
         
-        <button type="submit" disabled={loading} style={{ width: '100%', padding: '14px', background: '#0071e3', color: 'white', border: 'none', borderRadius: 12, fontSize: 16, fontWeight: 600, cursor: 'pointer' }}>
+        <button type="submit" disabled={loading} style={{ width: '100%', padding: '14px', background: 'var(--primary)', color: 'var(--text-on-primary)', border: 'none', borderRadius: 12, fontSize: 16, fontWeight: 600, cursor: 'pointer' }}>
           {loading ? 'Criando...' : 'Criar minha lista de presentes'}
         </button>
       </form>
